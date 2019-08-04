@@ -2,9 +2,9 @@
   "name": "ping-server",
   "version": "1.0.0",
   "description": "Main ping server",
-  "main": "webpack.server.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --mode=development --config webpack.server.config",
+    "build": "webpack --mode=production --config webpack.server.config"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/ggranito/ping-server/issues"
   },
-  "homepage": "https://github.com/ggranito/ping-server#readme"
+  "homepage": "https://github.com/ggranito/ping-server#readme",
+  "dependencies": {
+    "@types/node": "^12.6.9",
+    "nodemon-webpack-plugin": "^4.0.8",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-node-externals": "^1.7.2"
+  }
 }
