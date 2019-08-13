@@ -1,6 +1,6 @@
 import { ParameterizedContext } from 'koa'
 import * as ws from 'ws';
-import { isError, isString, isBoolean } from 'util';
+import { isError } from '../util/TypeChecking';
 import { IncomingMessage } from 'http';
 import { Socket } from 'net';
 

@@ -1,7 +1,7 @@
 import * as koa from 'koa';
 import * as logger from 'koa-logger';
 import * as bodyParser from 'koa-bodyparser'
-import { isNumber } from 'util';
+import { isNumber } from '../util/TypeChecking';
 import * as Router from "./Router"
 import * as HTTPS from './HTTPS'
 

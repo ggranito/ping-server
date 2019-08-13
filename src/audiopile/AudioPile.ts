@@ -1,9 +1,9 @@
 import * as Cache from 'streaming-cache'
 import {v4} from 'uuid'
-import {Stream, Readable} from 'stream'
-import { isUndefined } from 'util';
+import { Readable} from 'stream'
 import { AudioPileStorage} from './GoogleCloudStorage';
 import { Failure, Cause } from '../util/Failure';
+import { isUndefined } from '../util/TypeChecking';
 
 const Unknown = Failure.Creator(Cause.Unknown)
 

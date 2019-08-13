@@ -1,13 +1,21 @@
-import { isUndefined } from "util";
+import { isUndefined } from '../util/TypeChecking'
 
-
-export type UserID = number
 interface UserInfo {
     name: string
 }
 
+export class UserID {
+    private id: number
+    constructor(id: number){
+        this.id = id
+    }
 
-class User {
+    toRaw () : number {
+        return this.id
+    }
+}
+
+export class User {
     id: UserID
     
     constructor (id: UserID) {
@@ -16,7 +24,7 @@ class User {
 
     private info? : UserInfo
 
-    private getInfo() : UserInfo {
+    getInfo() : UserInfo {
         if (!isUndefined(this.info)) {
             return this.info
         }
