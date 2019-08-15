@@ -1,6 +1,6 @@
-import { Pool, Submittable, QueryArrayConfig, QueryConfig, QueryResult, QueryArrayResult} from 'pg'
+import { Pool, QueryArrayConfig, QueryConfig, QueryResult, QueryArrayResult} from 'pg'
 import { isUndefined } from '../util/TypeChecking';
-import Failure, { wrapPromise, Cause, isFailure } from '../util/Failure';
+import Failure, { Cause, isFailure } from '../util/Failure';
 
 //Pulls connection info from ENV variables
 // PGUSER=dbuser
@@ -44,10 +44,12 @@ type Queryable = {
     (queryTextOrConfig: string | QueryConfig, values?: any[]): Promise<QueryResult | Failure<Cause.Unknown>>;
 }
 
+//Use this for any singleton queries. Subsequent calls may be distributed among connections
 const query: Queryable = (a: any, b?: any) => {
     return Failure.wrapPromise(getPool().query(a, b))
 }
 
+//Use this for any transactions (queries using the same executor will be executed by the same client)
 async function executeSequence (executor: (queryable: Queryable) =>  PromiseLike<void | Failure<Cause, Error>>) {
     const client = await Failure.wrapPromise(getPool().connect())
     if (isFailure(client)) {
@@ -65,10 +67,10 @@ async function executeSequence (executor: (queryable: Queryable) =>  PromiseLike
     }
 }
 
-export const db = {
+export const DB = {
     query: query,
     destory: destroyPool,
     executeSequence: executeSequence
 }
 
-export default db
+export default DB
