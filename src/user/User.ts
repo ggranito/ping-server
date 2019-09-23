@@ -1,4 +1,5 @@
 import { isUndefined } from '../util/TypeChecking'
+import DB from '../database/Postgres';
 
 interface UserInfo {
     name: string

@@ -5,30 +5,34 @@ export enum Cause {
     Unknown,
     NotFound,
     Unimplemented,
-    RecognitionConflict
+    RecognitionConflict,
+    InvalidPassword
 }
 
 export class Failure<C extends Cause, Data = undefined> {
-    constructor(readonly cause : C, readonly data: Data) {
+    constructor(readonly cause : C, readonly data: Data, readonly msg?: string) {
         if (cause == Cause.Unknown) {
             if (isError(data)) {
                 console.error("UNKNOWN ERROR: " + data.message)
                 console.error(data)
+            } else if (!isUndefined(msg)){
+                console.error("UNKNOWN ERROR: " + msg)
+                console.error(JSON.stringify(data))
             } else {
                 console.error("UNKNOWN ERROR: " + JSON.stringify(data))
             }
         }
     }
 
-    static Creator<T extends Cause=Cause>(cause: T) : () => Failure<T, undefined> {
-        return () => {
-            return new Failure(cause, undefined)
+    static Creator<T extends Cause=Cause>(cause: T) : (msg? : string) => Failure<T, undefined> {
+        return (msg? : string) => {
+            return new Failure(cause, undefined, msg)
         }
     }
 
-    static CreatorWithData<Data = any, T extends Cause=Cause>(cause: T) : (data: Data) => Failure<T, Data> {
-        return (data: Data) => {
-            return new Failure(cause, data)
+    static CreatorWithData<Data = any, T extends Cause=Cause>(cause: T, msg?: string) : (data: Data) => Failure<T, Data> {
+        return (data: Data, msg?: string) => {
+            return new Failure(cause, data, msg)
         }
     }
 

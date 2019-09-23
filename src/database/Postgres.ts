@@ -38,7 +38,7 @@ function getPool () {
 //Need all these declarations to make the typings work. Copied from the pg-node defs
 //Can put logging and other stuff in here
 //Also wrapped it in the failure catcher so we don't get errors thrown around on await
-type Queryable = {
+export type Queryable = {
     (queryConfig: QueryArrayConfig, values?: any[]): Promise<QueryArrayResult | Failure<Cause.Unknown>>;
     (queryConfig: QueryConfig): Promise<QueryResult | Failure<Cause.Unknown>>;
     (queryTextOrConfig: string | QueryConfig, values?: any[]): Promise<QueryResult | Failure<Cause.Unknown>>;
@@ -69,7 +69,7 @@ async function executeSequence (executor: (queryable: Queryable) =>  PromiseLike
 
 export const DB = {
     query: query,
-    destory: destroyPool,
+    destroy: destroyPool,
     executeSequence: executeSequence
 }
 

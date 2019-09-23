@@ -5,6 +5,7 @@
         "module": "commonjs",
         "noImplicitAny": true,
         "strictNullChecks": true,
+        "strict": true,
         "jsx": "react",
         "sourceMap": true,
         "typeRoots": [

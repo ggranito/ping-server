@@ -34,5 +34,5 @@ function handleNewCall(ws: ws, user: User) : void {
 }
 
 const newCallMiddleware = WSS.newSocketMiddleware((ws, ctx) => {
-    handleNewCall(ws, )
+    handleNewCall(ws)
 })

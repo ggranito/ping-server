@@ -1,6 +1,9 @@
 import { Readable } from "stream";
-import { AudioPileID } from "./AudioPile";
+import { AudioPileID } from "../audiopile/AudioPile";
 import { Failure, Cause } from "../util/Failure";
+import { Storage } from '@google-cloud/storage'
+
+const storage = new Storage()
 
 const Unimplemented = Failure.Creator(Cause.Unimplemented)
 

@@ -45,16 +45,7 @@ var serverConfig = (env, options) => {
         plugins: [
             new webpack.DefinePlugin({
                 'process.env.PORT' : isProd ? 80 : 9010,
-                // 'process.env.CLIENT_DIR' : JSON.stringify("./" + BUILD_DIR + "/client"),
-                'process.env.USE_HTTPS' : isProd,
-                // 'process.env.FIREBASE_CREDENTIALS' : JSON.stringify(require("./PRIVATE_FIREBASE_CREDENTIALS.json")),
-                // 'process.env.CLOUD_SPEECH_CREDENTIALS' : JSON.stringify(require("./PRIVATE_CLOUD_SPEECH_CREDENTIALS.json")),
-                // 'process.env.APNS_CONFIG' : JSON.stringify({
-                //     USE_PROD : isProd && false,
-                //     TEAM_ID : "752JJ6GTV5",
-                //     KEY_PATH : "./APNS_AuthKey_772BM5AW32.p8",
-                //     KEY_ID : "772BM5AW32"
-                // })
+                'process.env.USE_HTTPS' : isProd
             })
         ].concat(devplugins),
 

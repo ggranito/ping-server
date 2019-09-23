@@ -1,7 +1,7 @@
 import * as Cache from 'streaming-cache'
 import {v4} from 'uuid'
 import { Readable} from 'stream'
-import { AudioPileStorage} from './GoogleCloudStorage';
+import { AudioPileStorage} from '../database/GoogleCloudStorage';
 import { Failure, Cause } from '../util/Failure';
 import { isUndefined } from '../util/TypeChecking';
 
