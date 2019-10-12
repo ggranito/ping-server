@@ -61,3 +61,4 @@ CREATE TABLE calls (
 );
 GRANT SELECT, INSERT(sender, sender_audio, recipient) ON calls TO pingapp;
 GRANT UPDATE(recipient) ON calls to pingapp;
+

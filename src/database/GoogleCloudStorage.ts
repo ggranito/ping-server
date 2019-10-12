@@ -4,6 +4,7 @@ import { Failure, Cause } from "../util/Failure";
 import { Storage } from '@google-cloud/storage'
 
 const storage = new Storage()
+const bucketExists = await storage.
 
 const Unimplemented = Failure.Creator(Cause.Unimplemented)
 

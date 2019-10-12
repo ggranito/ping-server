@@ -1,28 +1,52 @@
 import * as Cache from 'streaming-cache'
-import {v4} from 'uuid'
 import { Readable} from 'stream'
 import { AudioPileStorage} from '../database/GoogleCloudStorage';
 import { Failure, Cause } from '../util/Failure';
 import { isUndefined } from '../util/TypeChecking';
+import { User, UserID } from '../user/User';
+import { DB } from '../database/Postgres'
 
-const Unknown = Failure.Creator(Cause.Unknown)
 
-export class AudioPileID {
-    private str: string
-    constructor(str: string){
-        this.str = str
-    }
+const cache = new Cache({})
 
-    toString () : string {
-        return this.str
-    }
+const Unknown = Failure.Creator(Cause.Unknown);
 
-    static getNewID() : AudioPileID {
-        return new AudioPileID(v4())
+const Queries = {
+    newEntry:  (creatorID : UserID) => {
+        if (isUndefined(creatorID)) {
+            `INSERT INTO audiopile VALUES (${creatorID})`
+        }
     }
 }
 
-const cache = new Cache({})
+
+export class AudioPileEntry {
+    private id: string
+
+    private info: undefined | {
+        creator: User | undefined
+    }
+
+    private constructor(id: string){
+        this.id = id
+    }
+
+
+    private static newEntryQuery(creator?: User) {
+        const creatorStr = isUndefined(creator) ? `NULL` : `'${creator.id}'`
+        return ``
+    }
+    static async newEntry(creator?: User) : Promise<AudioPileEntry> {
+        const creatorID = isUndefined(creator) ? "NULL" : creator.id.toRaw();
+        DB.query()
+    }
+}
+
+
+
+
+
+
 
 function addToCache(dataStream: Readable, id: AudioPileID) {
     dataStream.pipe(cache.set(id.toString()))

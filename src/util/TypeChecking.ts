@@ -1,5 +1,7 @@
 import {types} from 'util'
 
+export type Typeguard<T> = (value: any) => value is T
+
 export function isObject(value: any): value is object {
     return value !== null && typeof value === 'object'
 }
