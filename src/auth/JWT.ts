@@ -1,7 +1,8 @@
 import * as JWT from 'jsonwebtoken'
 import { isString, isObject, isUndefined, isError } from '../util/TypeChecking'
 import { UserID, User } from '../user/User'
-import Failure, { Cause } from '../util/Failure'
+import Failure, { Cause, isFailure } from '../util/Failure'
+import { BaseContext, Middleware, LoggedInContext } from '../servers/ServerTypes'
 
 const SECRET = process.env.JWT_SECRET
 if (!isString(SECRET)) throw Error('No JWT Secret Provided')
@@ -64,3 +65,25 @@ const verify = (token: string, options = {}) => {
         })
     })
 }
+
+
+export function getAuthToken (user: User) {
+    return sign({
+        uid: UserID.toValue(user.id)
+    })
+}
+
+export function authenticateJWT<TContext extends BaseContext>(middleware: Middleware<TContext & LoggedInContext>) {
+    return async (ctx: TContext, next: () => Promise<any>) => {
+        const token = ctx.headers['auth-token']
+        if (isString(token)) {
+            const user = await verify(token)
+            if (!isFailure(user)) {
+                const castedCtx = (ctx as TContext & LoggedInContext);
+                castedCtx.state.user = user
+                middleware(castedCtx, next)
+            }    
+        }
+        ctx.throw('Invalid Auth Token', 401)
+    }
+} 

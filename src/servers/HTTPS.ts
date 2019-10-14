@@ -26,14 +26,14 @@ const getGreenlock = () => {
       });
 }
 
-export const startHttpsServer = (app: koa) => {
+export const startHttpsServer = (app: koa<any, any>) => {
 
     const greenlock = getGreenlock();
     // https server
     var server = https.createServer(greenlock.tlsOptions, greenlock.middleware(app.callback()));
 
     server.listen(443, function () {
-        console.log('Listening at https://localhost:' + this.address().port);
+        console.log('Listening at https://localhost:' + 443);
     });
 
     // http redirect to https

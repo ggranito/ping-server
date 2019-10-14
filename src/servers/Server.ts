@@ -4,6 +4,10 @@ import * as bodyParser from 'koa-bodyparser'
 import { isNumber } from '../util/TypeChecking';
 import * as Router from "./Router"
 import * as HTTPS from './HTTPS'
+import { IRouterParamContext } from 'koa-router';
+import { User } from '../user/User';
+import compose = require('koa-compose');
+import { BaseState } from './ServerTypes';
 
 export const startServers = () => {
     //Check Config
@@ -11,14 +15,14 @@ export const startServers = () => {
         throw new Error("Listening Port Undefined, and not using HTTPS")
 
     //Init app
-    const app = new koa();
+    const app = (new koa<BaseState>())
 
     //setup middleware
-    app.use(bodyParser())
-    app.use(logger())
+        .use<BaseState>(bodyParser())
+        .use<BaseState>(logger())
 
     //Add routes
-    app.use(Router.routes)
+        .use(Router.routes)
 
 
     // start server
@@ -30,4 +34,3 @@ export const startServers = () => {
         console.log("Started Server on port " + process.env.PORT)
     }
 }
-
